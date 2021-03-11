@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
     public class EfProductDal : IProductDal
     {
         //Nuget
+        /*
         List<Product> _products;
         public EfProductDal()
         {
@@ -44,39 +46,89 @@ namespace DataAccess.Concrete.EntityFramework
             _products.Remove(productToDelete);
 
             */
-            // => lambda isareti her p icin anlamina gelir. First veya FirstOfDefault metotları da olur. Dongu var.
-            Product productToDelete = _products.SingleOrDefault(p => p.ProductID == product.ProductID);
-            _products.Remove(productToDelete);
+        // => lambda isareti her p icin anlamina gelir. First veya FirstOfDefault metotları da olur. Dongu var.
+        /*
+        Product productToDelete = _products.SingleOrDefault(p => p.ProductID == product.ProductID);
+        _products.Remove(productToDelete);
+    }
+
+    public Product Get(Expression<Func<Product, bool>> filter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Product> GetAll()
+    {
+        return _products;
+    }
+
+    public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Product> GetAllByCategory(int categoryId)
+    {
+        return _products.Where(p => p.CategoryID == categoryId).ToList();
+    }
+
+    public void Update(Product product)
+    {
+        Product productToUpdate = _products.SingleOrDefault(p => p.ProductID == product.ProductID);
+        productToUpdate.ProductID = product.ProductID;
+        productToUpdate.CategoryID = product.CategoryID;
+        productToUpdate.ProductName = product.ProductName;
+        productToUpdate.UnitPrice = product.UnitPrice;
+        productToUpdate.UnitsInStock = product.UnitsInStock;
+    }
+
+    */
+        public void Add(Product entity)
+        {   //using nesnesi garbage collectora hemen ugrar. isi bitince cope atilir bellek yorar.
+            using (NorthwindContext context=new NorthwindContext())
+            {
+                var addedEntity = context.Entry(entity);
+                addedEntity.State = EntityState.Added;
+                context.SaveChanges();
+            }
+        }
+
+        public void Delete(Product entity)
+        {
+            using (NorthwindContext context = new NorthwindContext())
+            {
+                var deletedEntity = context.Entry(entity);
+                deletedEntity.State = EntityState.Deleted;
+                context.SaveChanges();
+            }
         }
 
         public Product Get(Expression<Func<Product, bool>> filter)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Product> GetAll()
-        {
-            return _products;
+            using (NorthwindContext context=new NorthwindContext())
+            {
+                return context.Set<Product>().SingleOrDefault(filter);
+            }
         }
 
         public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            using (NorthwindContext context=new NorthwindContext())
+            {
+                //turned operatörü
+                return filter == null ? context.Set<Product>().ToList()
+                    : context.Set<Product>().Where(filter).ToList();
+            }
         }
 
-        public List<Product> GetAllByCategory(int categoryId)
+        public void Update(Product entity)
         {
-            return _products.Where(p => p.CategoryID == categoryId).ToList();
-        }
-
-        public void Update(Product product)
-        {
-            Product productToUpdate = _products.SingleOrDefault(p => p.ProductID == product.ProductID);
-            productToUpdate.ProductID = product.ProductID;
-            productToUpdate.CategoryID = product.CategoryID;
-            productToUpdate.ProductName = product.ProductName;
-            productToUpdate.UnitPrice = product.UnitPrice;
-            productToUpdate.UnitsInStock = product.UnitsInStock;
+            using (NorthwindContext context = new NorthwindContext())
+            {
+                var updatedEntity = context.Entry(entity);
+                updatedEntity.State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
     }
 }
