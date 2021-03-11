@@ -5,8 +5,9 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface IProductDal
+    public interface IProductDal:IEntityRepostory<Product>
     {
+        /*
         List<Product> GetAll();
 
         void Add(Product product);
@@ -14,6 +15,7 @@ namespace DataAccess.Abstract
         void Delete(Product product);
 
         List<Product> GetAllByCategory(int categoryId);
+        */
 
     }
 }
