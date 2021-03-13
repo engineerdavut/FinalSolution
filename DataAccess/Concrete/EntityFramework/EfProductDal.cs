@@ -1,6 +1,7 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -133,5 +134,24 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
         */
+        public List<ProductDetailDto> GetProductDetails()
+        {
+            using (NorthwindContext northwindContext=new NorthwindContext())
+            {
+                var result = from p in northwindContext.Products
+                             join c in northwindContext.Categories
+                             on p.CategoryID equals c.CategoryID
+                             select new ProductDetailDto
+                             {
+                                 ProductId = p.ProductID,
+                                 ProductName = p.ProductName,
+                                 CategoryName = c.CategoryName,
+                                 UnitsInStock = p.UnitsInStock
+
+                             };
+                return result.ToList();
+
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace ConsoleUI
                 Console.WriteLine(product.ProductName);
             }
             */
-            // ProductTest();
+             ProductTest();
             CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
             foreach (var category in categoryManager.GetAll())
             {
@@ -43,6 +43,12 @@ namespace ConsoleUI
 
                 Console.WriteLine(product.ProductName);
             }
+            foreach (var product in productManager1.GetProductDetails())
+            {
+
+                Console.WriteLine(product.ProductName+"     "+product.CategoryName);
+            }
+
         }
     }
 }
