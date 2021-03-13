@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfProductDal : IProductDal
+    public class EfProductDal : EfEntityFrameworkBase<Product, NorthwindContext>, IProductDal
     {
         //Nuget
         /*
@@ -83,6 +84,7 @@ namespace DataAccess.Concrete.EntityFramework
     }
 
     */
+        /*
         public void Add(Product entity)
         {   //using nesnesi garbage collectora hemen ugrar. isi bitince cope atilir bellek yorar.
             using (NorthwindContext context=new NorthwindContext())
@@ -130,5 +132,6 @@ namespace DataAccess.Concrete.EntityFramework
                 context.SaveChanges();
             }
         }
+        */
     }
 }
