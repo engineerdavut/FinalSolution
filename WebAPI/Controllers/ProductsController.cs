@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpGet("getbyid")]
-        public IActionResult BetById(int id)
+        public IActionResult GetById(int id)
         {
 
             // Bagimlilik zinciri olustu. dependcy chain
