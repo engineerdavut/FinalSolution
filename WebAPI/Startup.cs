@@ -35,8 +35,8 @@ namespace WebAPI
             //[LogAspec]--> Autofac AOP ye yardimci oluyor.
             services.AddControllers();
             //IoC
-            services.AddSingleton<IProductService, ProductManager>();
-            services.AddSingleton<IProductDal, EfProductDal>();
+           // services.AddSingleton<IProductService, ProductManager>();
+           // services.AddSingleton<IProductDal, EfProductDal>();
 
         }
 
