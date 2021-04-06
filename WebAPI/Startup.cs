@@ -1,5 +1,8 @@
 using Business.Abstract;
 using Business.Concrete;
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
@@ -41,12 +44,13 @@ namespace WebAPI
             //IoC
             // services.AddSingleton<IProductService, ProductManager>();
             // services.AddSingleton<IProductDal, EfProductDal>();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowOrigin",
-                    builder=>builder.WithOrigins("http://localhost:3000") );
+            services.AddCors();
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowOrigin",
+            //        builder=>builder.WithOrigins("http://localhost:4201") );
 
-            });
+            //});
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -64,6 +68,10 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
+            services.AddDependencyResolvers(new ICoreModule[] {
+                    new CoreModule()
+                }
+            ) ;
 
         }
 
@@ -77,7 +85,7 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
             }
             //buradan gelen her türlü cevaba yanýt ver.
-            app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader());
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
