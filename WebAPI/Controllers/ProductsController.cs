@@ -65,5 +65,37 @@ namespace WebAPI.Controllers
 
 
         }
+        [HttpGet("getbycategoryid")]
+        public IActionResult GetByCategoryId(int categoryId)
+        {
+
+            // Bagimlilik zinciri olustu. dependcy chain
+            // IProductService productService = new ProductManager(new EfProductDal());
+            var result = _productService.GetByCategoryId(categoryId);
+            if (result.success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+
+
+        }
+        [HttpGet("getproductdetails")]
+        public IActionResult GetProductDetails()
+        {
+
+            // Bagimlilik zinciri olustu. dependcy chain
+            // IProductService productService = new ProductManager(new EfProductDal());
+            var result = _productService.GetProductDetails();
+            if (result.success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+
+
+        }
     }
 }

@@ -56,7 +56,7 @@ namespace ConsoleUI
             }
 
             Console.WriteLine("-----------------------");
-            foreach (var product in productManager1.GetAllByCategoryId(4).Data)
+            foreach (var product in productManager1.GetByCategoryId(4).Data)
             {
 
                 Console.WriteLine(product.ProductName);

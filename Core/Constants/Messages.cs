@@ -27,6 +27,7 @@ namespace Core.Constants
         public static string SuccessfulLogin = "Giris basarili";
         public static string UserAlreadyExists = "Kullanici zaten kayıtlı.";
         public static string AccessTokenCreated = "Erişim tokeni oluşturuldu.";
-        public static string ProductUpdated;
+        public static string ProductUpdated = "ürün güncellendi";
+        public static string CategoryIdListed = "categori id listelendi.";
     }
 }

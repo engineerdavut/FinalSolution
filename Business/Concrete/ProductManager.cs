@@ -71,9 +71,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Messages.ProductsListed);
         }
 
-        public IDataResult<List<Product>> GetAllByCategoryId(int id)
+        public IDataResult<List<Product>> GetByCategoryId(int id)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryID == id));
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryID == id),Messages.CategoryIdListed);
         }
         [CacheAspect]
         public IDataResult<Product> GetById(int productId)
